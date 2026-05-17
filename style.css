@@ -9,9 +9,30 @@ body{
   height:100vh;
   overflow:hidden;
   font-family:Arial, sans-serif;
+  background: black;
   position:relative;
   color: white;
-  /* AR.js handles the webcam background automatically */
+}
+
+/* Background Camera */
+#webcam {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* Transparent 3D Overlay */
+.a-canvas {
+  position: fixed !important;
+  inset: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 2;
+  pointer-events: none; /* Let clicks pass through to the document body for our JS listener */
 }
 
 .top-bar{
@@ -21,7 +42,7 @@ body{
   transform:translateX(-50%);
   text-align:center;
   color:white;
-  z-index:100; /* Ensure it stays above the AR canvas */
+  z-index:100;
   pointer-events: none;
   width: 100%;
 }
@@ -38,6 +59,10 @@ body{
   font-size:16px;
   font-weight:bold;
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.5);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
 }
 
 .bottom-ui{
@@ -78,11 +103,4 @@ body{
   font-size:28px;
   font-weight:700;
   color:#ffb84d;
-  margin-bottom: 8px;
-}
-
-.instruction {
-  font-size: 14px;
-  opacity: 0.9;
-  color: #ddd;
 }
