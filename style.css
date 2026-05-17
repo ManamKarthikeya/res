@@ -1,0 +1,117 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
+  background: radial-gradient(circle at center, #333 0%, #111 100%);
+  position:relative;
+  color: white;
+}
+
+model-viewer{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:1;
+}
+
+.top-bar{
+  position:fixed;
+  top:30px;
+  left:50%;
+  transform:translateX(-50%);
+  text-align:center;
+  color:white;
+  z-index:4;
+  pointer-events: none;
+}
+
+.top-bar h1{
+  font-size:32px;
+  font-weight:700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  white-space: nowrap;
+}
+
+.top-bar p{
+  margin-top:6px;
+  font-size:14px;
+  opacity:0.8;
+}
+
+.bottom-ui{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  padding:20px;
+  z-index:4;
+  pointer-events: none;
+}
+
+.dish-info{
+  width:100%;
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:24px;
+  padding:20px;
+  color:white;
+  pointer-events: auto;
+}
+
+.dish-info h2{
+  font-size:24px;
+  margin-bottom:12px;
+}
+
+.details{
+  display:flex;
+  gap:16px;
+  font-size:15px;
+  opacity:0.9;
+  margin-bottom:14px;
+}
+
+.price{
+  font-size:28px;
+  font-weight:700;
+  color:#ffb84d;
+  margin-bottom: 8px;
+}
+
+.instruction {
+  font-size: 13px;
+  opacity: 0.8;
+  color: #ddd;
+}
+
+.ar-button {
+  position: absolute;
+  bottom: 190px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff5e00;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(255, 94, 0, 0.4);
+  cursor: pointer;
+  z-index: 5;
+  pointer-events: auto;
+  white-space: nowrap;
+}
+
+.ar-button:active {
+  transform: translateX(-50%) scale(0.95);
+}
