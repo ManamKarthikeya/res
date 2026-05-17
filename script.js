@@ -22,31 +22,40 @@ if (scene.hasLoaded) {
 
 function addClickListener() {
   document.body.addEventListener('click', (e) => {
-    // Ignore clicks on the bottom UI card
-    if(e.target.closest('.dish-info')) return;
+    // Ignore clicks on the UI
+    if(e.target.closest('.dish-info') || e.target.closest('.top-bar')) return;
     
-    // Get camera's current 3D position and rotation
+    // Convert the 2D screen tap into WebGL normalized coordinates (-1 to +1)
+    const mouse = new THREE.Vector2();
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+    // Cast a 3D ray directly through the exact pixel the user tapped
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(mouse, camera.components.camera.camera);
+
+    const direction = raycaster.ray.direction;
     const cameraPosition = camera.getAttribute('position');
-    const camera3D = camera.object3D;
     
-    // Get the direction the camera is currently looking
-    const direction = new THREE.Vector3();
-    camera3D.getWorldDirection(direction);
+    // Move the model 2 meters exactly down that ray (prevents clipping the camera)
+    const distance = 2.0; 
     
-    // Calculate a new position 1.5 meters directly in front of the camera
-    const distance = -1.5; // Negative because A-Frame camera looks down the negative Z axis
     const newPos = {
       x: cameraPosition.x + (direction.x * distance),
-      y: cameraPosition.y + (direction.y * distance) - 0.5, // Move it down slightly so it looks like it's on a table
+      y: cameraPosition.y + (direction.y * distance),
       z: cameraPosition.z + (direction.z * distance)
     };
 
-    // Move the pizza to that exact spot and make it visible
+    // Move the 3D model to that exact spot and make it visible
     pizza.setAttribute('position', newPos);
     pizza.setAttribute('visible', 'true');
     
+    // Make sure the model faces the user so it doesn't look sideways
+    const cameraRotation = camera.getAttribute('rotation');
+    pizza.setAttribute('rotation', `0 ${cameraRotation.y} 0`);
+    
     // Update instruction text
-    instructionText.innerText = "Pizza placed! Move your phone to look around.";
+    instructionText.innerText = "Placed exactly where you tapped!";
     instructionText.style.backgroundColor = "rgba(0, 200, 0, 0.6)";
   });
 }
